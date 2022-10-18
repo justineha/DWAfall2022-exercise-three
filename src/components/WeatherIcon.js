@@ -1,28 +1,30 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
+    faBolt,  
     faCloud, 
     faSun, 
     faUmbrella, 
     faSnowflake, 
-    faBolt,  
 } from '@fortawesome/free-solid-svg-icons';
 
 
-function weatherIcon ( {weatherType }) {
+function WeatherIcon ( { weatherType }) {
     switch (weatherType) {
-        case "Cloud":
+        case "Clouds":
         case "Fog":
-            return <FontAwesomeIcon Icon = {faCloud} />;
+            return <FontAwesomeIcon icon={faCloud} />;
         case "Sun":
         case "Clear":
-            return <FontAwesomeIcon Icon = {faSun} />;
+            return <FontAwesomeIcon icon={faSun} />;
         case "Rain":
-            return <FontAwesomeIcon Icon = {faUmbrella} />;
+            return <FontAwesomeIcon icon={faUmbrella} />;
         case "Snow":
-            return <FontAwesomeIcon Icon = {faSnowflake} />;
+            return <FontAwesomeIcon icon={faSnowflake} />;
         case "Thunder":
-            return <FontAwesomeIcon Icon = {faBolt} />;
+            return <FontAwesomeIcon icon={faBolt} />;
+        default:
+            return null;
   };
 }
-export default weatherIcon;
+export default WeatherIcon;

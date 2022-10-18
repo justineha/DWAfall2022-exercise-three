@@ -48,20 +48,21 @@ function Home() {
     }, [weatherData]);
    
     return (
-   // <div style = {{backgroundColor: `rgba(0,130,70,${cloudiness/100})`}}>
-        <div className = "Weather--wrapper">
-            <Header/>
-            <h1>Weather App</h1>
-            <WeatherCard city={city}
-            cloudiness={cloudiness}
-            currentTemp={currentTemp}
-            highTemp={highTemp}
-            humidity={humidity}
-            lowTemp={lowTemp}
-            weatherType={weatherType}
-            windSpeed={windSpeed}/>
-        </div>
-    // </div>
+      <div className = "Weather--wrapper">
+          <div className="Weather--header">
+              <div class="rectangle"></div>
+              <Header/>
+              <WeatherCard 
+              city={city}
+              cloudiness={cloudiness}
+              currentTemp={currentTemp}
+              highTemp={highTemp}
+              humidity={humidity}
+              lowTemp={lowTemp}
+              weatherType={weatherType}
+              windSpeed={windSpeed}/>
+          </div>
+      </div>
     )
 }
  
