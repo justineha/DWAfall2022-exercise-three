@@ -9,23 +9,20 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 
-function weatherIcon (( weatherType )) {
+function weatherIcon ( {weatherType }) {
     switch (weatherType) {
-        case "Clouds":
-        case "Fog";
+        case "Cloud":
+        case "Fog":
             return <FontAwesomeIcon Icon = {faCloud} />;
-        case "Sun";
-        case "Clear";
+        case "Sun":
+        case "Clear":
             return <FontAwesomeIcon Icon = {faSun} />;
-        case "Rain";
+        case "Rain":
             return <FontAwesomeIcon Icon = {faUmbrella} />;
-        case "Snow";
+        case "Snow":
             return <FontAwesomeIcon Icon = {faSnowflake} />;
-        case "Thunder";
+        case "Thunder":
             return <FontAwesomeIcon Icon = {faBolt} />;
-    <div>
-        <FontAwesomeIcon Icon={faEnvelope}/>
-    </div>
   };
 }
 export default weatherIcon;

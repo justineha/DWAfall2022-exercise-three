@@ -1,66 +1,68 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import axios from 'axios';
-import { useSearchParams } from 'react-router-dom';
-import { WEATHER_APP_API_KEY } from "../API_KEYS";
+import React, { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import axios from "axios";
+import {WEATHER_APP_API_KEY} from "../API_KEYS";
 import WeatherCard from "../components/WeatherCard";
-
-// Query OpenWeatherApI for weather data
-// Make request to open weather (based on city, not longitude/latitude)
-// Cities: Seoul, Berlin, New York, San Fracisco 
-const openWeatherURL = `https://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=${WEATHER_APP_API_KEY}`;
-
-function Home() {    
-// Value stored in state for weather data
+import Header from "../components/Header";
+ 
+ 
+function Home() {
     const [weatherData, setWeatherData] = useState({});
-    const [city, setCity] = useState();
+    const [city, setCity] = useState("San Francisco");
     const [searchParams] = useSearchParams();
-
     useEffect(() => {
-        const cityToQuery = searchParams("city") || city;
-        setCity(cityToQuery)
+        const cityToQuery= searchParams.get("city") || city;
+        setCity(cityToQuery);
         axios
-            .get(openWeatherURL)
-            .then(function (response) {
-                setWeatherData(response.data);
-            })
-            .catch(function (error) {
-                console.warn(error);
-                setWeatherData({});
-            }); 
-        }, []);
-
-const { 
-    city,
-    cloudiness,
-    currentTemp,
-    highTemp,
-    lowTemp,
-    humidity,
-    weatherType,
-    windSpeed,
-} = useMemo (() => {
-    const weatherMain = weatherData.main || {};
-    const weatherClouds = weatherData.clouds || {};
-    return {
-        city: weatherData.name,
-        cloudiness: weatherClouds.all,
-        currentTemp: Math.round(weatherMain.temp),
-        highTemp: Math.round(weatherMain.temp_max),
-        lowTemp: Math.round(weatherMain.low_temp),
-        humidity: weatherMain.humidity,
-        weatherType: weatherData.weather && weatherData.weather[0].max_temp,
-    };
-}, [weatherData]);
-    
-    // Display this weather data into our app
-        console.log("state value", weatherData);
-
-return (
-    <div>
-        <h1>Weather App</h1>
-        <WeatherCard city ={"Seoul"} humidity={humidity} currentTemp={currentTemp} highTemp={highTemp} lowTemp={lowTemp} windSpeed={windSpeed} cloudiness={cloudiness} weatherType={weatherType}/>     
-    </div>
-    );
+        .get(`https://api.openweathermap.org/data/2.5/weather?q=${cityToQuery}&units=imperial&appid=${WEATHER_APP_API_KEY}&units=imperial`)
+        .then(function(response){
+            setWeatherData(response.data);
+        })
+        .catch(function(error){
+            setWeatherData({});
+        });
+    }, []);
+ 
+    const {
+        cloudiness,
+        currentTemp,
+        highTemp,
+        humidity,
+        lowTemp,
+        weatherType,
+        windSpeed,
+    } = useMemo(() => {
+        const weatherMain = weatherData.main || {};
+        const weatherClouds = weatherData.clouds || {};
+        return {
+            cloudiness: weatherClouds.all,
+            currentTemp: Math.round(weatherMain.temp),
+            highTemp: Math.round(weatherMain.temp_max),
+            humidity: weatherMain.humidity,
+            lowTemp: Math.round(weatherMain.temp_min),
+            weatherType: weatherData.weather && weatherData.weather[0].main,
+            windSpeed: weatherData.wind && weatherData.wind.speed,
+ 
+ 
+        };
+    }, [weatherData]);
+   
+    return (
+   // <div style = {{backgroundColor: `rgba(0,130,70,${cloudiness/100})`}}>
+        <div className = "Weather--wrapper">
+            <Header/>
+            <h1>Weather App</h1>
+            <WeatherCard city={city}
+            cloudiness={cloudiness}
+            currentTemp={currentTemp}
+            highTemp={highTemp}
+            humidity={humidity}
+            lowTemp={lowTemp}
+            weatherType={weatherType}
+            windSpeed={windSpeed}/>
+        </div>
+    // </div>
+    )
 }
-
+ 
 export default Home;

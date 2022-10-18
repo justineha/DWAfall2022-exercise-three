@@ -1,16 +1,14 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import WeatherIcon from './WeatherIcon';
 
 function WeatherCard({
-    setcity, 
+    city, 
     weatherType, 
     humidity, 
     currentTemp, 
     highTemp, 
     lowTemp, 
     cloudiness, 
-    humidity, 
     windSpeed,
 }) {
     return (
@@ -20,14 +18,13 @@ function WeatherCard({
                 <WeatherIcon weatherType={weatherType} />
                 <p className = "WeatherCard--type"/>
             </div>
-            <WeatherIcon/>
             <h3>Weather Type: {weatherType}</h3>
-            <p>Current Tempature: {currentTemp}</p>
-            <p>High Tempature: {highTemp}</p>
-            <p>Low Tempature: {lowTemp}</p>
-            <p>Cloudiness: {cloudiness}</p>
+            <p>Current Tempature: {currentTemp}&deg;</p>
+            <p>High Tempature: {highTemp}&deg;</p>
+            <p>Low Tempature: {lowTemp}&deg;</p>
+            <p>Cloudiness: {cloudiness}%</p>
             <p>Humidity: {humidity}%</p>
-            <p>Wind speed: {windSpeed}</p>
+            <p>Wind speed: {windSpeed} m/h</p>
         </div>
     );
 }
